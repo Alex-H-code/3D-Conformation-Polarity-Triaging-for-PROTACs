@@ -52,9 +52,7 @@ sbatch --array=0-N%3 --export=INPUT_CSV=compounds.csv,CONFS_PER_MOLECULE=3000,CH
 ```
 
 Generates 3,000 MMFF94-minimized conformers per compound (vacuum, no
-solvent model) via GPU-batched distance-geometry embedding. **Batch size
-must be 200** for the MMFF minimization step — 0 (unbatched) causes an
-illegal-memory-access CUDA error, and 1,000 exceeds GPU memory.
+solvent model) via GPU-batched distance-geometry embedding. 
 
 ### 2. Boltzmann weighting (CPU)
 
@@ -191,7 +189,7 @@ new_compounds_pipeline/
 
 - **`PIPELINE_DIR` must derive from `$SLURM_SUBMIT_DIR`, not `$BASH_SOURCE`** — Slurm spools batch scripts to `/var/spool/slurmd/...` before running them, so path-of-self tricks resolve to the spool copy, not the submitted script's real location.
 - **`rdFreeSASA.classifyAtoms()` silently fails on small molecules** — it's parameterized for protein residues and returns all-zero radii rather than erroring; supply explicit per-element van der Waals radii instead.
-- **MMFF batch size must be 200** for GPU conformer minimization — see step 1.
+
 
 ## License / Citation
 
